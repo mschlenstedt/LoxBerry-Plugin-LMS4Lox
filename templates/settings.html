@@ -1,0 +1,44 @@
+<p>
+<center>
+<table border=0 cellpadding=10 cellspacing=10>
+<tr>
+<td>
+<b>Fhem Server:</b>
+</td>
+<td>
+<a id="button" data-icon="check" data-role="button" data-inline="true" data-mini="false" href="./index.cgi?do=start">Start</a>
+</td>
+<td>
+<a id="button" data-icon="delete" data-role="button" data-inline="true" data-mini="false" href="./index.cgi?do=stop">Stop</a>
+</td>
+<td>
+<a id="button" data-icon="refresh" data-role="button" data-inline="true" data-mini="false" href="./index.cgi?do=restart">Restart</a>
+</td>
+<td>
+<a id="button" data-icon="info" data-role="button" data-inline="true" data-mini="false" href="/admin/system/tools/logfile.cgi?logfile=plugins/<!--$psubfolder-->/fhem.log&header=html&format=template" target="_blank">Logfile</a>
+</td>
+</tr>
+<tr>
+<td colspan=5 align=center>
+<font face="courier"><b><!--$fhemstatus--></b></font>
+</td>
+</tr>
+</table>
+</center>
+</p>
+<p>
+This Plugin has noc options. The complete configuration is done directly within Fhem. Fhem was installed in the following folder:
+<font face="courier"><b><!--$installfolder-->/data/plugins/<!--$psubfolder--></b></font>
+</p>
+<p>
+<br>
+</p>
+<p>
+<a id="button" data-role="button" data-inline="false" data-mini="false" href="http://<!--$loxberryhost-->:8083/fhem" target="_blank">Visit Fhem (Desktop)</a>
+</p>
+<p>
+<a id="button" data-role="button" data-inline="false" data-mini="false" href="http://<!--$loxberryhost-->:8084/fhem" target="_blank">Visit Fhem (Smartphone)</a>
+</p>
+<p>
+<a id="button" data-role="button" data-inline="false" data-mini="false" href="http://<!--$loxberryhost-->:8085/fhem" target="_blank">Visit Fhem (Tablet)</a>
+</p>
