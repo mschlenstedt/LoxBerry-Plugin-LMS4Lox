@@ -34,6 +34,11 @@ case "$1" in
 	echo "Stopping logitechmediaserver service"
 	systemctl stop logitechmediaserver
 	exit 0
+  restart)
+	# Restarting logitechmediaserver service 
+	echo "Restarting logitechmediaserver service"
+	systemctl restart logitechmediaserver
+	exit 0
   ;;
   enable)
 	# Enabling logitechmediaserver service 
@@ -41,7 +46,7 @@ case "$1" in
 	systemctl enable logitechmediaserver
 	exit 0
 	;;
-  disabe)
+  disable)
 	# Enabling logitechmediaserver service 
 	echo "Disabling logitechmediaserver service"
 	systemctl disable logitechmediaserver

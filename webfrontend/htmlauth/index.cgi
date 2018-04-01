@@ -20,8 +20,8 @@
 ##########################################################################
 
 use LoxBerry::System;
-use LoxBerry::Storage;
 use LoxBerry::Web;
+use CGI;
 #use Config::Simple;
 use warnings;
 use strict;
@@ -44,7 +44,7 @@ my $version = "0.0.1";
 ##########################################################################
 
 # Get CGI
-my $cgi = CGI->new;
+our $cgi = CGI->new;
 
 my $maintemplate = HTML::Template->new(
                 filename => "$lbptemplatedir/settings.html",
@@ -57,19 +57,60 @@ my $maintemplate = HTML::Template->new(
 
 my %L = LoxBerry::System::readlanguage($maintemplate, "language.ini");
 
-# Should Fhem Server be started
-#if ( param('do') ) { 
-#	$do = quotemeta( param('do') ); 
-#	if ( $do eq "start") {
-#		system ("$installfolder/system/daemons/plugins/$psubfolder start");
-#	}
-#	if ( $do eq "stop") {
-#		system ("$installfolder/system/daemons/plugins/$psubfolder stop");
-#	}
-#	if ( $do eq "restart") {
-#		system ("$installfolder/system/daemons/plugins/$psubfolder restart");
-#	}
-#}
+# Actions to perform
+if ( param('do') ) { 
+	$do = quotemeta( param('do') ); 
+	if ( $do eq "start") {
+		system ("$lbpbindir/lms_wrapper.sh start");
+	}
+	if ( $do eq "stop") {
+		system ("$lbpbindir/lms_wrapper.sh stop");
+	}
+	if ( $do eq "restart") {
+		system ("$lbpbindir/lms_wrapper.sh restart");
+	}
+	if ( $do eq "enable") {
+		system ("$lbpbindir/lms_wrapper.sh enable");
+	}
+	if ( $do eq "disable") {
+		system ("$lbpbindir/lms_wrapper.sh disable");
+	}
+}
+
+# Check current state
+my $state;
+qx ( systemctl is-active logitechmediaserver );
+if ($? eq 0) {
+	my $pid = qx ( cat /var/run/logitechmediaserver.pid );
+	chomp $pid;
+	$state = "Active. PID is: $pid";
+} else {
+	$state = "Not active";
+}
+$maintemplate->param( STATE => $state);
+
+# Check boot state
+my $bootstate;
+qx ( systemctl is-enabled logitechmediaserver );
+if ($? eq 0) {
+	$bootstate = "Enabled";
+} else {
+	$bootstate = "Disabled";
+}
+$maintemplate->param( BOOTSTATE => $bootstate);
+
+# Navbar
+our $host = "$ENV{HTTP_HOST}";
+our $port = qx ( cat /var/lib/squeezeboxserver/prefs/server.prefs | grep -e '^httpport' | awk -F ': ' '{ print \$2 }' );
+
+our %navbar;
+$navbar{1}{Name} = "$L{'SETTINGS.LABEL_LMS'}";
+$navbar{1}{URL} = "http://$host:$port";
+$navbar{1}{target} = '_blank';
+
+$navbar{2}{Name} = "$L{'SETTINGS.LABEL_LMS_SETTINGS'}";
+$navbar{2}{URL} = "http://$host:$port/settings/index.html";
+$navbar{2}{target} = '_blank';
 
 # Print Template
 LoxBerry::Web::lbheader("LMS for LoxBerry", "http://www.loxwiki.eu:80");
