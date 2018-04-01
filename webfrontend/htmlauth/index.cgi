@@ -52,28 +52,29 @@ my $maintemplate = HTML::Template->new(
                 loop_context_vars => 1,
                 die_on_bad_params=> 0,
                 #associate => $cfg,
-                # debug => 1,
+                debug => 1,
                 );
 
 my %L = LoxBerry::System::readlanguage($maintemplate, "language.ini");
 
 # Actions to perform
-if ( param('do') ) { 
-	$do = quotemeta( param('do') ); 
+my $do;
+if ( $cgi->param('do') ) { 
+	$do = $cgi->param('do'); 
 	if ( $do eq "start") {
-		system ("$lbpbindir/lms_wrapper.sh start");
+		system ("sudo $lbpbindir/lms_wrapper.sh start > /dev/null 2>&1");
 	}
 	if ( $do eq "stop") {
-		system ("$lbpbindir/lms_wrapper.sh stop");
+		system ("sudo $lbpbindir/lms_wrapper.sh stop > /dev/null 2>&1");
 	}
 	if ( $do eq "restart") {
-		system ("$lbpbindir/lms_wrapper.sh restart");
+		system ("sudo $lbpbindir/lms_wrapper.sh restart > /dev/null 2>&1");
 	}
 	if ( $do eq "enable") {
-		system ("$lbpbindir/lms_wrapper.sh enable");
+		system ("sudo $lbpbindir/lms_wrapper.sh enable > /dev/null 2>&1");
 	}
 	if ( $do eq "disable") {
-		system ("$lbpbindir/lms_wrapper.sh disable");
+		system ("sudo $lbpbindir/lms_wrapper.sh disable > /dev/null 2>&1");
 	}
 }
 

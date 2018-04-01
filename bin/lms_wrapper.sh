@@ -22,7 +22,7 @@ ENVIRONMENT=$(cat /etc/environment)
 export $ENVIRONMENT
 
 case "$1" in
-  start|"")
+  start)
 	# Starting logitechmediaserver service 
 	echo "Starting logitechmediaserver service"
 	systemctl enable logitechmediaserver
@@ -34,12 +34,13 @@ case "$1" in
 	echo "Stopping logitechmediaserver service"
 	systemctl stop logitechmediaserver
 	exit 0
+	;;
   restart)
 	# Restarting logitechmediaserver service 
 	echo "Restarting logitechmediaserver service"
 	systemctl restart logitechmediaserver
 	exit 0
-  ;;
+  	;;
   enable)
 	# Enabling logitechmediaserver service 
 	echo "Enabling logitechmediaserver service"
@@ -53,7 +54,7 @@ case "$1" in
 	exit 0
 	;;
   *)
-        echo "Usage: $0 [start|stop|enable|disable]" >&2
+        echo "Usage: $0 [start|stop|restart|enable|disable]" >&2
         exit 3
   ;;
 
