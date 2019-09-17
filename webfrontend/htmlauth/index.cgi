@@ -102,7 +102,8 @@ $maintemplate->param( BOOTSTATE => $bootstate);
 
 # Navbar
 our $host = "$ENV{HTTP_HOST}";
-our $port = qx ( cat /var/lib/squeezeboxserver/prefs/server.prefs | grep -e '^httpport' | awk -F ': ' '{ print \$2 }' );
+our $port = qx ( cat /var/lib/squeezeboxserver/prefs/server.prefs | grep -e '^httpport' | awk -F ': ' '{ print \$2 }' | sed s/\\'//g);
+chomp $port;
 
 our %navbar;
 $navbar{1}{Name} = "$L{'SETTINGS.LABEL_LMS'}";
