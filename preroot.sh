@@ -58,7 +58,7 @@ if [ -e $LBSCONFIG/is_x64.cfg ]; then
        	downloados=amd64
 	echo "<INFO> Our architecture is: x64"
 fi
-url="http://www.mysqueezebox.com/update/?version=7.9.1&revision=1&geturl=1&os=deb$downloados"
+url="http://www.mysqueezebox.com/update/?version=7.9.2&revision=1&geturl=1&os=deb$downloados"
 latest_lms=$(wget -q -O - "$url")
 echo "<INFO> Latest LMS package is: $latest_lms"
 
@@ -88,6 +88,7 @@ usermod -aG audio squeezeboxserver
 
 echo "<INFO> Enable logitechmediaserver at boot"
 systemctl enable logitechmediaserver
+systemctl stop logitechmediaserver
 systemctl start logitechmediaserver
 
 exit 0
