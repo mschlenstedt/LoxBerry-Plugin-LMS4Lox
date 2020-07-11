@@ -58,7 +58,14 @@ if [ -e $LBSCONFIG/is_x64.cfg ]; then
        	downloados=amd64
 	echo "<INFO> Our architecture is: x64"
 fi
-url="http://www.mysqueezebox.com/update/?version=7.9.2&revision=1&geturl=1&os=deb$downloados"
+
+# Latest available package in 7.9 branch
+lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=7.9"
+lmsup_temp="/tmp/lms.update"
+wget -q -O $lmsup_temp $lmsup_url_version
+lmsup_version=$(grep -A 1 "_all.deb" $lmsup_temp | grep -v grep | cut -c 95- | cut -d"<" -f1 | cut -d"_" -f1 | cut -d"~" -f1 )
+
+url="http://www.mysqueezebox.com/update/?version=$lmsup_version&revision=1&geturl=1&os=deb$downloados"
 latest_lms=$(wget -q -O - "$url")
 echo "<INFO> Latest LMS package is: $latest_lms"
 
