@@ -60,7 +60,7 @@ if [ -e $LBSCONFIG/is_x64.cfg ]; then
 fi
 
 # Latest available package in 7.9 branch
-lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=7.9"
+lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=8.3"
 lmsup_temp="/tmp/lms.update"
 wget -q -O $lmsup_temp $lmsup_url_version
 lmsup_version=$(grep -A 1 "_all.deb" $lmsup_temp | grep -v grep | cut -c 95- | cut -d"<" -f1 | cut -d"_" -f1 | cut -d"~" -f1 )
