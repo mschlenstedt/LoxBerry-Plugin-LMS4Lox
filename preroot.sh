@@ -46,30 +46,30 @@ PCONFIG=$LBPCONFIG/$PDIR
 PSBIN=$LBPSBIN/$PDIR
 PBIN=$LBPBIN/$PDIR
 
-if [ -e $LBSCONFIG/is_raspberry.cfg ]; then
-       	downloados=arm
-	echo "<INFO> Our architecture is: Raspberry"
+# Latest available package
+content=$(wget http://downloads.slimdevices.com/nightly/ -q -O -)
+content=$(echo $content | sed -e 's/<[^>]*>//g' | sed 's/[^0-9. ]//g')
+IFS=' ' read -r -a content_arr <<< "$content"
+LMS_MAX=0
+for i in "${content_arr[@]}"
+do
+   if (( $(echo "$i > $LMS_MAX" |bc -l) )); then
+      LMS_MAX=$i
 fi
-if [ -e $LBSCONFIG/is_x86.cfg ]; then
-       	downloados=i386
-	echo "<INFO> Our architecture is: x86"
+done
+if [ $LMS_MAX = "" ]; then
+	echo "<FAIL> Could not figure out newest version of LMS. Giving up."
+	exit 2
 fi
-if [ -e $LBSCONFIG/is_x64.cfg ]; then
-       	downloados=amd64
-	echo "<INFO> Our architecture is: x64"
-fi
-
-# Latest available package in 7.9 branch
-lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=8.3"
+lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=$LMS_MAX"
 lmsup_temp="/tmp/lms.update"
+rm -f $lmsup_temp
 wget -q -O $lmsup_temp $lmsup_url_version
-lmsup_version=$(grep -A 1 "_all.deb" $lmsup_temp | grep -v grep | cut -c 95- | cut -d"<" -f1 | cut -d"_" -f1 | cut -d"~" -f1 )
-
-url="http://www.mysqueezebox.com/update/?version=$lmsup_version&revision=1&geturl=1&os=deb$downloados"
-latest_lms=$(wget -q -O - "$url")
+lmsup_relurl=$( grep "_all.deb" $lmsup_temp | cut -d"\"" -f2 |  cut -c 2- )
+latest_lms="http://downloads.slimdevices.com/nightly$lmsup_relurl"
 echo "<INFO> Latest LMS package is: $latest_lms"
 
-rm -r /tmp/lms_sources
+rm -fr /tmp/lms_sources
 mkdir -p /tmp/lms_sources
 cd /tmp/lms_sources
 
