@@ -35,7 +35,7 @@ use strict;
 ##########################################################################
 
 # Version of this script
-my $version = "0.0.1";
+my $version = "0.0.2";
 
 #$cfg = new Config::Simple("$lbhomedir/config/system/general.cfg");
 
@@ -82,7 +82,7 @@ if ( $cgi->param('do') ) {
 my $state;
 qx ( systemctl is-active logitechmediaserver );
 if ($? eq 0) {
-	my $pid = qx ( cat /var/run/logitechmediaserver.pid );
+	my $pid = qx ( pgrep -o -f '/usr/sbin/squeezeboxserver ' );
 	chomp $pid;
 	$state = "Active. PID is: $pid";
 } else {
