@@ -47,26 +47,10 @@ PSBIN=$LBPSBIN/$PDIR
 PBIN=$LBPBIN/$PDIR
 
 # Latest available package
-content=$(wget http://downloads.slimdevices.com/nightly/ -q -O -)
-content=$(echo $content | sed -e 's/<[^>]*>//g' | sed 's/[^0-9. ]//g')
-IFS=' ' read -r -a content_arr <<< "$content"
-LMS_MAX=0
-for i in "${content_arr[@]}"
-do
-   if (( $(echo "$i > $LMS_MAX" |bc -l) )); then
-      LMS_MAX=$i
-fi
-done
-if [ $LMS_MAX = "" ]; then
-	echo "<FAIL> Could not figure out newest version of LMS. Giving up."
-	exit 2
-fi
-lmsup_url_version="http://downloads.slimdevices.com/nightly/?ver=$LMS_MAX"
-lmsup_temp="/tmp/lms.update"
-rm -f $lmsup_temp
-wget -q -O $lmsup_temp $lmsup_url_version
-lmsup_relurl=$( grep "_all.deb" $lmsup_temp | cut -d"\"" -f2 |  cut -c 2- )
-latest_lms="http://downloads.slimdevices.com/nightly$lmsup_relurl"
+data=$(wget -q -O- https://lms-community.github.io/lms-server-repository/)
+lms_max=$(echo $data | grep -o -P '(?<=development-build).*(?= - Development Build)' | awk '{print $NF}')
+versonline=$(echo $data | grep -o -P '(?<='$lms_max').*(?=_all.deb)' | awk '{print $NF}' | cut -d'>' -f2- | cut -d'_' -f2-)
+latest_lms="https://downloads.slimdevices.com/nightly/logitechmediaserver_"$versonline"_all.deb"
 echo "<INFO> Latest LMS package is: $latest_lms"
 
 rm -fr /tmp/lms_sources
