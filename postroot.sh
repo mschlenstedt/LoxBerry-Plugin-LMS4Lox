@@ -47,12 +47,12 @@ PSBIN=$LBPSBIN/$PDIR
 PBIN=$LBPBIN/$PDIR
 
 # Latest available package
-data=$(wget -q -O- https://lms-community.github.io/lms-server-repository/)
+dl_url="https://downloads.lms-community.org/nightly/logitechmediaserver_"
+data=$(wget -q -O- https://lyrion.org/lms-server-repository/)
 lms_max=$(echo $data | grep -o -P '(?<=development-build).*(?= - Development Build)' | awk '{print $NF}')
-versonline=$(echo $data | grep -o -P '(?<='$lms_max').*(?=_all.deb)' | awk '{print $NF}' | cut -d'>' -f2- | cut -d'_' -f2-)
-latest_lms="https://downloads.slimdevices.com/nightly/logitechmediaserver_"$versonline"_all.deb"
+versonline=$(echo $data | grep -o -P '(?<='$LMS_LATEST').*(?=_all.deb)' | awk '{print $NF}' | cut -d'>' -f2- | cut -d'_' -f2-)
+latest_lms=$dl_url$versonline"_all.deb"
 echo "<INFO> Latest LMS package is: $latest_lms"
-
 rm -fr /tmp/lms_sources
 mkdir -p /tmp/lms_sources
 cd /tmp/lms_sources
