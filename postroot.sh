@@ -47,7 +47,7 @@ PSBIN=$LBPSBIN/$PDIR
 PBIN=$LBPBIN/$PDIR
 
 # Latest available package
-dl_url="https://downloads.lms-community.org/nightly/logitechmediaserver_"
+dl_url="https://downloads.lms-community.org/nightly/lyrionmusicserver_"
 data=$(wget -q -O- https://lyrion.org/lms-server-repository/)
 lms_max=$(echo $data | grep -o -P '(?<=development-build).*(?= - Development Build)' | awk '{print $NF}')
 versonline=$(echo $data | grep -o -P '(?<='$LMS_LATEST').*(?=_all.deb)' | awk '{print $NF}' | cut -d'>' -f2- | cut -d'_' -f2-)
