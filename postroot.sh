@@ -60,7 +60,7 @@ cd /tmp/lms_sources
 wget --progress=dot:mega $latest_lms
 
 lms_deb=${latest_lms##*/}
-if [ -e "/tmp/lms_sources$lms_deb" ]; then
+if [ ! -e "/tmp/lms_sources/$lms_deb" ]; then
 	echo "<FAIL> Something went wrong downloading $lms_deb. Giving up."
 	exit 2
 fi
