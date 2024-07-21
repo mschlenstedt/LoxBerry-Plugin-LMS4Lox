@@ -80,7 +80,7 @@ if ( $cgi->param('do') ) {
 
 # Check current state
 my $state;
-qx ( systemctl is-active logitechmediaserver );
+qx ( systemctl is-active lyrionmusicserver );
 if ($? eq 0) {
 	my $pid = qx ( pgrep -o -f '/usr/sbin/squeezeboxserver ' );
 	chomp $pid;
@@ -92,7 +92,7 @@ $maintemplate->param( STATE => $state);
 
 # Check boot state
 my $bootstate;
-qx ( systemctl is-enabled logitechmediaserver );
+qx ( systemctl is-enabled lyrionmusicserver );
 if ($? eq 0) {
 	$bootstate = "Enabled";
 } else {
@@ -115,7 +115,7 @@ $navbar{2}{URL} = "http://$host:$port/settings/index.html";
 $navbar{2}{target} = '_blank';
 
 # Print Template
-LoxBerry::Web::lbheader("LMS for LoxBerry", "http://www.loxwiki.eu:80");
+LoxBerry::Web::lbheader("LMS for LoxBerry", "https://wiki.loxberry.de/plugins/lms_4_loxberry/start");
 print $maintemplate->output;
 LoxBerry::Web::lbfooter();
 
