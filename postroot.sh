@@ -68,7 +68,7 @@ echo "<INFO> Downloaded package: $lms_deb"
 echo "<INFO> Installing $lms_deb..."
 dpkg -i $lms_deb
 
-if ! dpkg -V logitechmediaserver; then
+if ! dpkg -V lyrionmusicserver; then
 	echo "<FAIL> Something went wrong installing $lms_deb. Giving up."
 	exit 2
 fi
@@ -78,8 +78,8 @@ usermod -aG loxberry squeezeboxserver
 usermod -aG audio squeezeboxserver
 
 echo "<INFO> Enable logitechmediaserver at boot"
-systemctl enable logitechmediaserver
-systemctl stop logitechmediaserver
-systemctl start logitechmediaserver
+systemctl enable lyrionmusicserver
+systemctl stop lyrionmusicserver
+systemctl start lyrionmusicserver
 
 exit 0
