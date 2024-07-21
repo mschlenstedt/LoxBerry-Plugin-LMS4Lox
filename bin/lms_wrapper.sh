@@ -23,34 +23,34 @@ export $ENVIRONMENT
 
 case "$1" in
   start)
-	# Starting logitechmediaserver service 
-	echo "Starting logitechmediaserver service"
-	systemctl enable logitechmediaserver
-	systemctl start logitechmediaserver
+	# Starting lyrionmusicserver service 
+	echo "Starting lyrionmusicserver service"
+	systemctl enable lyrionmusicserver
+	systemctl start lyrionmusicserver
 	exit 0
 	;;
   stop)
-	# Stopping logitechmediaserver service 
-	echo "Stopping logitechmediaserver service"
-	systemctl stop logitechmediaserver
+	# Stopping lyrionmusicserver service 
+	echo "Stopping lyrionmusicserver service"
+	systemctl stop lyrionmusicserver
 	exit 0
 	;;
   restart)
-	# Restarting logitechmediaserver service 
-	echo "Restarting logitechmediaserver service"
-	systemctl restart logitechmediaserver
+	# Restarting lyrionmusicserver service 
+	echo "Restarting lyrionmusicserver service"
+	systemctl restart lyrionmusicserver
 	exit 0
   	;;
   enable)
-	# Enabling logitechmediaserver service 
-	echo "Enabling logitechmediaserver service"
-	systemctl enable logitechmediaserver
+	# Enabling lyrionmusicserver service 
+	echo "Enabling lyrionmusicserver service"
+	systemctl enable lyrionmusicserver
 	exit 0
 	;;
   disable)
-	# Enabling logitechmediaserver service 
-	echo "Disabling logitechmediaserver service"
-	systemctl disable logitechmediaserver
+	# Enabling lyrionmusicserver service 
+	echo "Disabling lyrionmusicserver service"
+	systemctl disable lyrionmusicserver
 	exit 0
 	;;
   *)
